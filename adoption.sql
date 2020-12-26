@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 26, 2020 at 07:53 AM
+-- Generation Time: Dec 26, 2020 at 01:36 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -30,16 +30,24 @@ SET time_zone = "+00:00";
 CREATE TABLE `adopted` (
   `Child_id` int(5) UNSIGNED NOT NULL,
   `Parent_id` int(5) DEFAULT NULL,
-  `Child_name` varchar(10) DEFAULT NULL,
-  `Parent_Name` varchar(10) DEFAULT NULL,
+  `Child_name` varchar(20) DEFAULT NULL,
+  `Parent_Name` varchar(20) DEFAULT NULL,
   `Child_Gender` varchar(6) DEFAULT NULL,
   `Weight` float(7,4) DEFAULT NULL,
-  `Blood_group` varchar(5) DEFAULT NULL,
+  `Blood_group` varchar(20) DEFAULT NULL,
   `Height` float(7,4) DEFAULT NULL,
   `Marital_status` varchar(3) DEFAULT NULL,
   `DOA` date DEFAULT NULL,
-  `Address` varchar(20) DEFAULT NULL
+  `Address` varchar(20) DEFAULT NULL,
+  `Reg_id` int(5) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `adopted`
+--
+
+INSERT INTO `adopted` (`Child_id`, `Parent_id`, `Child_name`, `Parent_Name`, `Child_Gender`, `Weight`, `Blood_group`, `Height`, `Marital_status`, `DOA`, `Address`, `Reg_id`) VALUES
+(4, NULL, 'Ram', NULL, '2', 45.0000, 'Bposi', 134.0000, NULL, '2020-12-26', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -49,22 +57,29 @@ CREATE TABLE `adopted` (
 
 CREATE TABLE `child` (
   `Child_id` int(5) UNSIGNED NOT NULL,
-  `Name` varchar(10) DEFAULT NULL,
+  `Name` varchar(100) DEFAULT NULL,
   `DOB` date DEFAULT NULL,
   `Age` int(20) NOT NULL,
   `Gender` varchar(6) DEFAULT NULL,
   `Weight` float(7,4) DEFAULT NULL,
   `Height` float(7,4) DEFAULT NULL,
-  `Blood_group` varchar(6) DEFAULT NULL,
-  `Photo` varchar(225) DEFAULT NULL
+  `Blood_group` varchar(20) DEFAULT NULL,
+  `Photo` varchar(225) DEFAULT NULL,
+  `Reg_id` int(5) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `child`
 --
 
-INSERT INTO `child` (`Child_id`, `Name`, `DOB`, `Age`, `Gender`, `Weight`, `Height`, `Blood_group`, `Photo`) VALUES
-(1, 'Skr', '2000-05-01', 20, '2', 35.0000, 143.0000, 'Oposit', '/assets/img/godschild/20201226073826_1608964706.jpg');
+INSERT INTO `child` (`Child_id`, `Name`, `DOB`, `Age`, `Gender`, `Weight`, `Height`, `Blood_group`, `Photo`, `Reg_id`) VALUES
+(1, 'Skr', '2000-05-01', 20, '2', 35.0000, 143.0000, 'Oposit', '/assets/img/godschild/20201226073826_1608964706.jpg', 1),
+(2, 'Skr1', '2000-05-01', 20, '2', 35.0000, 165.0000, 'Oposit', '/assets/img/godschild/20201226084745_1608968865.jpg', 1),
+(5, 'Jack Churn', '2013-05-09', 7, '2', 32.0000, 143.0000, 'Bposit', '/assets/img/godschild/20201226085255_1608969175.png', 1),
+(6, 'Killer Que', '2006-07-01', 14, '2', 56.0000, 154.0000, 'ABnega', '/assets/img/godschild/20201226090344_1608969824.jpg', 1),
+(7, 'Shyam', '2000-05-01', 20, '1', 36.0000, 165.0000, 'Oposit', '/assets/img/godschild/20201226090725_1608970045.jpg', 1),
+(8, 'Futureis', '2001-03-05', 19, '2', 32.0000, 134.0000, 'Anegat', '/assets/img/godschild/20201226091854_1608970734.jpg', 1),
+(9, 'Birju', '2013-05-09', 7, '1', 33.0000, 142.0000, 'Bnegative', '/assets/img/godschild/20201226122734_1608982054.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -85,10 +100,19 @@ CREATE TABLE `displays` (
 
 CREATE TABLE `event` (
   `Event_id` int(5) UNSIGNED NOT NULL,
-  `Name` varchar(10) DEFAULT NULL,
+  `Name` varchar(20) DEFAULT NULL,
   `Date` date DEFAULT NULL,
-  `Winner` varchar(10) DEFAULT NULL
+  `Winner` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `event`
+--
+
+INSERT INTO `event` (`Event_id`, `Name`, `Date`, `Winner`) VALUES
+(1, '', '2020-12-26', 'Jack Churn'),
+(2, '', '2020-12-26', 'Jack Churn'),
+(3, 'Dancing', '2020-12-26', 'Jack Churn');
 
 -- --------------------------------------------------------
 
@@ -152,7 +176,7 @@ CREATE TABLE `hassl` (
 --
 
 CREATE TABLE `login` (
-  `Username` varchar(10) NOT NULL,
+  `Username` varchar(20) NOT NULL,
   `Password` varchar(20) DEFAULT NULL,
   `UserId` int(10) UNSIGNED NOT NULL,
   `UserType` tinyint(1) NOT NULL
@@ -173,7 +197,7 @@ INSERT INTO `login` (`Username`, `Password`, `UserId`, `UserType`) VALUES
 
 CREATE TABLE `organisation` (
   `Regid` int(5) UNSIGNED NOT NULL,
-  `Name` varchar(10) DEFAULT NULL,
+  `Name` varchar(20) DEFAULT NULL,
   `Phone_number` varchar(10) DEFAULT NULL,
   `Address` varchar(20) DEFAULT NULL,
   `Reg_Date` date DEFAULT NULL,
@@ -225,13 +249,15 @@ CREATE TABLE `shortlisted` (
 -- Indexes for table `adopted`
 --
 ALTER TABLE `adopted`
-  ADD PRIMARY KEY (`Child_id`);
+  ADD PRIMARY KEY (`Child_id`),
+  ADD KEY `Reg_id` (`Reg_id`);
 
 --
 -- Indexes for table `child`
 --
 ALTER TABLE `child`
-  ADD PRIMARY KEY (`Child_id`);
+  ADD PRIMARY KEY (`Child_id`),
+  ADD KEY `Reg_id` (`Reg_id`);
 
 --
 -- Indexes for table `displays`
@@ -309,19 +335,19 @@ ALTER TABLE `shortlisted`
 -- AUTO_INCREMENT for table `adopted`
 --
 ALTER TABLE `adopted`
-  MODIFY `Child_id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `Child_id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `child`
 --
 ALTER TABLE `child`
-  MODIFY `Child_id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Child_id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `Event_id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `Event_id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `organisation`
