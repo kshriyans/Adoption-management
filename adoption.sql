@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 25, 2020 at 04:50 PM
+-- Generation Time: Dec 26, 2020 at 07:53 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -48,14 +48,23 @@ CREATE TABLE `adopted` (
 --
 
 CREATE TABLE `child` (
-  `Child_id` int(5) NOT NULL,
+  `Child_id` int(5) UNSIGNED NOT NULL,
   `Name` varchar(10) DEFAULT NULL,
   `DOB` date DEFAULT NULL,
+  `Age` int(20) NOT NULL,
   `Gender` varchar(6) DEFAULT NULL,
   `Weight` float(7,4) DEFAULT NULL,
   `Height` float(7,4) DEFAULT NULL,
-  `Blood_group` varchar(6) DEFAULT NULL
+  `Blood_group` varchar(6) DEFAULT NULL,
+  `Photo` varchar(225) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `child`
+--
+
+INSERT INTO `child` (`Child_id`, `Name`, `DOB`, `Age`, `Gender`, `Weight`, `Height`, `Blood_group`, `Photo`) VALUES
+(1, 'Skr', '2000-05-01', 20, '2', 35.0000, 143.0000, 'Oposit', '/assets/img/godschild/20201226073826_1608964706.jpg');
 
 -- --------------------------------------------------------
 
@@ -306,7 +315,7 @@ ALTER TABLE `adopted`
 -- AUTO_INCREMENT for table `child`
 --
 ALTER TABLE `child`
-  MODIFY `Child_id` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `Child_id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `event`
@@ -334,7 +343,7 @@ ALTER TABLE `shortlisted`
 -- Constraints for table `displays`
 --
 ALTER TABLE `displays`
-  ADD CONSTRAINT `Child_id` FOREIGN KEY (`Child_id`) REFERENCES `adopted` (`Child_id`),
+  ADD CONSTRAINT `Child_id` FOREIGN KEY (`Child_id`) REFERENCES `child` (`Child_id`),
   ADD CONSTRAINT `Reg_id` FOREIGN KEY (`Reg_id`) REFERENCES `organisation` (`Regid`);
 COMMIT;
 
