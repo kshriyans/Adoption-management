@@ -29,7 +29,7 @@ if (!isset($_SESSION["username"])) {
 /////////////////////////////////
 $conn = connect_db();
 $userid = $_SESSION["userid"];
-$sql = sprintf("SELECT COUNT(Child_Id) Adopted FROM displays WHERE Reg_id=%s GROUP BY Reg_id", $userid);
+$sql = sprintf("SELECT COUNT(Child_Id) Adopted FROM adopted WHERE Reg_id=%s GROUP BY Reg_id", $userid);
 $rs = mysqli_query($conn, $sql);
 if(!$rs) { die("Query failed - " . mysqli_error($conn)); }
 
@@ -49,7 +49,7 @@ mysqli_free_result($rs);
 //   Fetching children statistics
 //   from godchild table
 /////////////////////////////////
-/*$sql = sprintf("SELECT COUNT(Child_id) FROM child WHERE OId=%s", $userid);
+$sql = sprintf("SELECT COUNT(Child_id) Children FROM child WHERE Reg_id=%s", $userid);
 $rs = mysqli_query($conn, $sql);
 if(!$rs) { die("Query failed - " . mysqli_error($conn)); }
 
@@ -58,20 +58,20 @@ if(mysqli_num_rows($rs) > 0)
 	if($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
 	{
 		$children = $row["Children"];
-		$male = $row["Male"];
-		$female = $row["Female"];
+		//$male = $row["Male"];
+		//$female = $row["Female"];
 	}
 }
 else
 {
 	$children = 0;
-	$male = 0;
-	$female = 0;
+	//$male = 0;
+	//$female = 0;
 
 }
 // Freein up result set
 mysqli_free_result($rs);
-*/
+
 //////////////////////////////////
 // STEP 3 : Appointment requests
 //   Fetching appointment statistics
@@ -128,7 +128,7 @@ render('dashsidebar', array('levelup' => '2', 'fullname' => $_SESSION["fullname"
 	<<div class="dash-body">
 		<div class="row clearfix">
 			<h1 style="font-family: 'Roboto regular'; font-size: 3em; width: 50%; margin: 0 auto 20px auto;">WELCOME!             Lets bring some smiles!</h1>
-			<!--<div class="col-w-12" style="float: none !important; margin: 0 auto;">
+			<div class="col-w-12" style="float: none !important; margin: 0 auto;">
 				<div class="col-w-4">
 					<div class="dash-container">
 						<div class="panel panel-default">
@@ -151,7 +151,7 @@ render('dashsidebar', array('levelup' => '2', 'fullname' => $_SESSION["fullname"
 						</div>
 					</div>
 				</div>
-				<div class="col-w-4">
+				<!--<div class="col-w-4">
 					<div class="dash-container">
 						<div class="panel panel-default">
 							<div class="panel-body">
@@ -161,11 +161,11 @@ render('dashsidebar', array('levelup' => '2', 'fullname' => $_SESSION["fullname"
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>-->
 
 
 
-			</div>-->
+			</div>
 
 		</div>
 		<div class="row" style="padding-top: 50px;">

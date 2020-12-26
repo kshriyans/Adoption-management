@@ -31,7 +31,8 @@ if (!isset($_GET["chid"])) {
 ///////////////////////////////////
 $conn = connect_db();
 $chid = $_GET["chid"];
-$sql = sprintf("SELECT ChId, FName, LName, Dob, Gender, Colour, RegOn, Photo FROM godchild WHERE ChId=%s",
+$userid= $_SESSION["userid"];
+$sql = sprintf("SELECT Child_id, Name, DOB, Gender, Blood_group, Weight, Height, Photo FROM child WHERE Child_id=%s",
 		mysqli_real_escape_string($conn, $chid));
 
 $rs = mysqli_query($conn, $sql);
@@ -41,12 +42,13 @@ if(mysqli_num_rows($rs) > 0)
 {
 	if($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
 	{
-		$_SESSION["chid"] = $row["ChId"];
-		$fname = $row["FName"];
-		$lname = $row["LName"];
-		$dob = $row["Dob"];
+		$_SESSION["chid"] = $row["Child_id"];
+		$Name = $row["Name"];
+		$bgrp = $row["Blood_group"];
+		$dob = $row["DOB"];
 		$gender = $row["Gender"];
-		$colour = $row["Colour"];
+		$Weight = $row["Weight"];
+		$Height = $row["Height"];
 		$oldphoto = $row["Photo"];
 
 	}
@@ -64,8 +66,8 @@ if(isset($_POST["updatechild"]) && $_POST["updatechild"] == "Update")
 	// STEP 1: Validating form data
 	///////////////////////////////////
 	$errors = "";
-    if(!isset($_POST["fname"]) || empty($_POST["fname"])) { $errors = '<p><span class="mandatory">*</span> marked fields are mandatory.</p>'; }
-    if(!isset($_POST["lname"]) || empty($_POST["lname"])) { $errors = '<p><span class="mandatory">*</span> marked fields are mandatory.</p>'; }
+    if(!isset($_POST["Name"]) || empty($_POST["Name"])) { $errors = '<p><span class="mandatory">*</span> marked fields are mandatory.</p>'; }
+    if(!isset($_POST["bgrp"]) || empty($_POST["bgrp"])) { $errors = '<p><span class="mandatory">*</span> marked fields are mandatory.</p>'; }
     if(!isset($_POST["dob"]) || empty($_POST["dob"])) { $errors = '<p><span class="mandatory">*</span> marked fields are mandatory.</p>'; }
 
 	// Validating photo field
@@ -85,18 +87,20 @@ if(isset($_POST["updatechild"]) && $_POST["updatechild"] == "Update")
 		$conn = connect_db();
 
 		$chid		= validate_form_data($conn, $_POST["chid"]);
-		$fname		= validate_form_data($conn, $_POST["fname"]);
-		$lname		= validate_form_data($conn, $_POST["lname"]);
+		$Name		= validate_form_data($conn, $_POST["Name"]);
+		$bgrp		= validate_form_data($conn, $_POST["bgrp"]);
 		$dob		= validate_form_data($conn, $_POST["dob"]);
 		$age		= date_diff_year(date('Ymd'), $dob);
 		$gender		= validate_form_data($conn, $_POST["gender"]);
 
 		// not mandatory field
-		if(isset($_POST["colour"]) && $_POST["colour"] != "") { $colour = validate_form_data($conn, $_POST["colour"]); } else { $colour = ""; }
+		if(isset($_POST["Height"]) && $_POST["Height"] != "") { $Height = validate_form_data($conn, $_POST["Height"]); } else { $Height = ""; }
+		if(isset($_POST["Weight"]) && $_POST["Weight"] != "") { $Weight = validate_form_data($conn, $_POST["Weight"]); } else { $Weight = ""; }
+		if(isset($_POST["Event"]) && $_POST["Event"] != "") { $Event = validate_form_data($conn, $_POST["Event"]); } else { $Event = ""; }
 
 		// Casing user details
-		$fname = ucwords(strtolower($fname));
-		$lname = ucwords(strtolower($lname));
+		$Name = ucwords(strtolower($Name));
+		//$lname = ucwords(strtolower($lname));
 
 		///////////////////////////////////
 		// Step 1: Uploading image
@@ -126,23 +130,31 @@ if(isset($_POST["updatechild"]) && $_POST["updatechild"] == "Update")
 		// Case 1: if image is not updated
 		if(isset($_FILES["photo"]["name"]) && empty($_FILES["photo"]["name"]))
 		{
-			$sql = sprintf("UPDATE godchild SET FName='%s', LName='%s', Dob='%s', Gender=%s, Age=%s, Colour='%s' WHERE ChId=%s",
-				$fname, $lname, $dob, $gender, $age, $colour, $chid);
+			$sql = sprintf("UPDATE child SET Name='%s', Blood_group='%s', DOB='%s', Gender=%s, Age=%s, Height=%s, Weight=%s WHERE Child_id=%s",
+				$Name, $bgrp, $dob, $gender, $age, $Height, $Weight, $chid);
 		}
 		else if(isset($isUploaded) && $isUploaded)
 		{
 			// if new image is uploaded then update photo field also else skip it
-			$sql = sprintf("UPDATE godchild SET FName='%s', LName='%s', Dob='%s', Gender=%s, Age=%s, Colour='%s', Photo='%s' WHERE ChId=%s",
-				$fname, $lname, $dob, $gender, $age, $colour, $photo, $chid);
+			$sql = sprintf("UPDATE child SET Name='%s', Blood_group='%s', DOB='%s', Gender=%s, Age=%s, Height=%s, Weight=%s, Photo='%s' WHERE Child_id=%s",
+				$Name, $bgrp, $dob, $gender, $age, $Height, $Weight,$photo, $chid);
 		}
 		else if(isset($isUploaded) && !$isUploaded)
 		{
 			$errors = '<p>Sorry! Image upload failed. Please try again.</p>';
 		}
+		if(!empty($_POST["Event"]))
+		{
+			$sql2 = sprintf("INSERT INTO event(Name, Date, Winner)
+					VALUES('%s', CURDATE(), '%s')",
+					$Event, $Name);
+					$rs1 = mysqli_query($conn, $sql2);
+		}
 
 		if(empty($errors))
 		{
 			$rs = mysqli_query($conn, $sql);
+			//$rs1 = mysqli_query($conn, $sql2);
 	    	if(!$rs) { die("Query failed - " . mysqli_error($conn)); }
 			else
 			{
@@ -160,7 +172,13 @@ if(isset($_POST["delconfirm"]) && $_POST["delconfirm"] == "Yes! Delete")
 {
 	$conn = connect_db();
 	$chid = mysqli_real_escape_string($conn, $_POST["chid"]);
-	$sql = sprintf("DELETE FROM godchild WHERE ChId=%s", $chid);
+	$sql1 = sprintf("INSERT INTO adopted(Child_id, Child_name,Child_Gender, Weight, Blood_Group, Height, DOA, Reg_id) 
+			VALUES(%s, '%s', %s, %s, '%s', %s, CURDATE(), %s)",
+			$chid, $Name, $gender, $Weight, $bgrp, $Height, $userid);
+	$rs = mysqli_query($conn,$sql1);
+	if(!$rs) { die("Query failed - " . mysqli_error($conn)); }
+	else{
+	$sql = sprintf("DELETE FROM child WHERE Child_id=%s", $chid);
 	if(mysqli_query($conn, $sql))
 	{
 		$_SESSION["msg"] = '<p>Child deleted successfully</p>';
@@ -170,6 +188,7 @@ if(isset($_POST["delconfirm"]) && $_POST["delconfirm"] == "Yes! Delete")
 	{
 		$errors .= '<p>Child can not be delted! try again.</p>';
 	}
+}
 
 }
 
@@ -182,7 +201,7 @@ if(isset($_POST["delconfirm"]) && $_POST["delconfirm"] == "Yes! Delete")
 * Render Dashboard header
 * @param array $data
 **************************************/
-render('dashheader', array('title' => $_SESSION["orgname"], 'levelup' => '2'));
+render('dashheader', array('title' => 'ORG', 'levelup' => '2'));
 
 ?>
 
@@ -193,7 +212,7 @@ render('dashheader', array('title' => $_SESSION["orgname"], 'levelup' => '2'));
 * Render Dashboard Sidebar
 * @param array $data
 **************************************/
-render('dashsidebar', array('levelup' => '2', 'orgname' => $_SESSION["orgname"], 'fullname' => $_SESSION["fullname"], 'photo' => $_SESSION["photo"], 'curpage' => 'godschild'));
+render('dashsidebar', array('levelup' => '2', 'fullname' => $_SESSION["fullname"], 'photo' => $_SESSION["photo"], 'curpage' => 'godschild'));
 ?>
 
 
@@ -234,8 +253,8 @@ render('dashsidebar', array('levelup' => '2', 'orgname' => $_SESSION["orgname"],
 
 						<div class="row form-controls-row">
 							<label for="fname">Enter name: <span class="mandatory">*</span></label>
-							<input type="text" id="fname" name="fname" placeholder="Your first name" value="<?php if(isset($fname)) echo htmlspecialchars($fname); ?>" style="width: 172px !important;">
-							<input type="text" id="lname" name="lname" placeholder="Your last name" value="<?php if(isset($lname)) echo htmlspecialchars($lname); ?>" style="width: 172px !important;">
+							<input type="text" id="Name" name="Name" placeholder="Your name" value="<?php if(isset($Name)) echo htmlspecialchars($Name); ?>" style="width: 172px !important;">
+							<input type="text" id="bgrp" name="bgrp" placeholder="Bood Group" value="<?php if(isset($bgrp)) echo htmlspecialchars($bgrp); ?>" style="width: 172px !important;">
 
 							<input type="hidden" name="chid" value="<?php if(isset($_SESSION["chid"])) echo htmlspecialchars($_SESSION["chid"]); ?>">
 						</div>
@@ -262,10 +281,17 @@ render('dashsidebar', array('levelup' => '2', 'orgname' => $_SESSION["orgname"],
 							?>
 						</div>
 						<div class="row form-controls-row">
-							<label for="colour">Enter Colour:</label>
-							<input type="text" id="colour" name="colour" placeholder="Colour of child (e.g. fair)" value="<?php if(isset($colour)) echo htmlspecialchars($colour); ?>">
+							<label for="Height">Enter Height:</label>
+							<input type="text" id="Height" name="Height" placeholder="Height in cms" value="<?php if(isset($Height)) echo htmlspecialchars($Height); ?>">
 						</div>
-
+						<div class="row form-controls-row">
+							<label for="Weight">Enter Weight:</label>
+							<input type="text" id="Weight" name="Weight" placeholder="Weight in Kgs" value="<?php if(isset($Weight)) echo htmlspecialchars($Weight); ?>">
+						</div>
+						<div class="row form-controls-row">
+							<label for="Event">Event Name:</label>
+							<input type="text" id="Event" name="Event" placeholder="Event name(Only if won)" value="<?php if(isset($_POST["Event"])) echo $_POST["Event"]; ?>">
+						</div>
 						<br />
 						<div class="row form-controls-row">
 							<label>Image of child:<span class="mandatory">*</span></label>

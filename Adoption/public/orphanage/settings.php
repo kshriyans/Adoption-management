@@ -12,7 +12,7 @@ ini_set("display_errors", 1);
 require_once('../../includes/helpers.php');
 
 // Redirecting if user is not logged in
-if (!isset($_SESSION["username"])) {
+if (!isset($_SESSION["userid"])) {
     header('Location: http://' . htmlspecialchars($_SERVER["HTTP_HOST"]));
     exit;
 }
@@ -25,7 +25,7 @@ if(isset($_POST["change"]) && $_POST["change"] == "Change password")
 	$conn = connect_db();
 
 	// Validation
-	$username = $_SESSION["username"];
+	$userid = $_SESSION["userid"];
 	$errors = "";
 	$oldpasswd = validate_form_data($conn, $_POST["oldpasswd"]);
 	$newpasswd = validate_form_data($conn, $_POST["newpasswd"]);
@@ -48,14 +48,14 @@ if(isset($_POST["change"]) && $_POST["change"] == "Change password")
 	// from database
 	if(empty($errors))
 	{
-		$sql = sprintf("SELECT Password FROM login WHERE Username='%s'", $username);
+		$sql = sprintf("SELECT Password FROM login WHERE UserId='%s'", $userid);
 	    $rs = mysqli_query($conn, $sql);
 	    if(!$rs) { die("Query failed - " . mysqli_error($conn)); }
 
 		if($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
-			$hashedpasswd 	= $row["Password"];
+			$passwd 	= $row["Password"];
 
-		if(!password_verify($oldpasswd, $hashedpasswd))
+		if(!password_verify($oldpasswd, $passwd))
 			$errors = '<p>Invalid old password!.</p>';
 
 		// Freeing up result set
@@ -66,8 +66,8 @@ if(isset($_POST["change"]) && $_POST["change"] == "Change password")
 	// after all validations
 	if(empty($errors))
 	{
-		$hashed_newpasswd = password_hash($newpasswd, PASSWORD_DEFAULT);
-		$sql = sprintf("UPDATE login set Password='%s' WHERE Username='%s'", $hashed_newpasswd, $username);
+		//$hashed_newpasswd = password_hash($newpasswd, PASSWORD_DEFAULT);
+		$sql = sprintf("UPDATE login set Password='%s' WHERE UserId='%s'", $newpasswd, $userid);
 		$rs = mysqli_query($conn, $sql);
 		if($rs)
 			header('Location: settings.php?alert=success');
@@ -88,7 +88,7 @@ if(isset($_POST["change"]) && $_POST["change"] == "Change password")
 * Render Dashboard header
 * @param array $data
 **************************************/
-render('dashheader', array('title' => $_SESSION["orgname"], 'levelup' => '2'));
+render('dashheader', array('title' => 'ORG', 'levelup' => '2'));
 
 ?>
 
@@ -99,7 +99,7 @@ render('dashheader', array('title' => $_SESSION["orgname"], 'levelup' => '2'));
 * Render Dashboard Sidebar
 * @param array $data
 **************************************/
-render('dashsidebar', array('levelup' => '2', 'orgname' => $_SESSION["orgname"], 'fullname' => $_SESSION["fullname"], 'photo' => $_SESSION["photo"], 'curpage' => 'settings'));
+render('dashsidebar', array('levelup' => '2', 'fullname' => $_SESSION["fullname"], 'photo' => $_SESSION["photo"], 'curpage' => 'settings'));
 ?>
 
 

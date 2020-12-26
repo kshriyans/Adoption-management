@@ -61,8 +61,8 @@ if(isset($_POST["addchild"]) && $_POST["addchild"] == "+ Add Child")
 		$gender		= validate_form_data($conn, $_POST["gender"]);
 
 		// not mandatory field
-		if(isset($_POST["weight"]) && $_POST["weight"] != "") { $Weight = validate_form_data($conn, $_POST["weight"]); } else { $colour = ""; }
-		if(isset($_POST["height"]) && $_POST["height"] != "") { $Height = validate_form_data($conn, $_POST["height"]); } else { $colour = ""; }
+		if(isset($_POST["weight"]) && $_POST["weight"] != "") { $Weight = validate_form_data($conn, $_POST["weight"]); } else { $Weight = ""; }
+		if(isset($_POST["height"]) && $_POST["height"] != "") { $Height = validate_form_data($conn, $_POST["height"]); } else { $Height = ""; }
 
 		// Casing user details
 		$Name = ucwords(strtolower($Name));
@@ -88,11 +88,20 @@ if(isset($_POST["addchild"]) && $_POST["addchild"] == "+ Add Child")
 		///////////////////////////////////
 		if($isUploaded)
 		{
-			$sql = sprintf("INSERT INTO child(Name, Dob, Gender, Age, Weight, Height, Blood_group, Photo)
-					VALUES('%s', '%s', %s, %s, %s, %s,'%s','%s')",
-					$Name,$dob, $gender, $age, $Weight, $Height, $bgrp, $photo);
+			$sql = sprintf("INSERT INTO child(Name, Dob, Gender, Age, Weight, Height, Blood_group, Photo, Reg_id)
+					VALUES('%s', '%s', %s, %s, %s, %s,'%s','%s', %s)",
+					$Name,$dob, $gender, $age, $Weight, $Height, $bgrp, $photo, $userid);
 
 			$rs = mysqli_query($conn, $sql);
+			/*
+			$sql1 = sprintf("SELECT Child_id FROM child WHERE Name = '%s'",$NAME);
+			$rs1 = mysqli_query($conn, $sql1);
+			$row = mysqli_fetch_array($rs1);
+			echo($row);
+			$sql2 = sprintf("INSERT INTO displays(Reg_id,Child_id)
+					VALUES(%s,%s)",
+					$userid,$row);
+			$rs2 = mysqli_query($conn,$sql2);*/
 	    	if(!$rs) { die("Query failed - " . mysqli_error($conn)); }
 			else
 			{
@@ -183,11 +192,11 @@ render('dashsidebar', array('levelup' => '2', 'fullname' => $_SESSION["fullname"
 							<input type="radio" id="female" name="gender" value="2" checked="checked"> <sapn class="txt-dark">Female</span>
 						</div>
 						<div class="row form-controls-row">
-							<label for="weight">Enter Colour:</label>
+							<label for="weight">Enter Weight:</label>
 							<input type="text" id="weight" name="weight" placeholder="Weight of child(in Kgs)" value="<?php if(isset($_POST["weight"])) echo $_POST["weight"]; ?>">
 						</div>
 						<div class="row form-controls-row">
-							<label for="height">Enter Colour:</label>
+							<label for="height">Enter Height:</label>
 							<input type="text" id="height" name="height" placeholder="Height of child(in Cms)" value="<?php if(isset($_POST["height"])) echo $_POST["height"]; ?>">
 						</div>
 

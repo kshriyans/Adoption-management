@@ -24,7 +24,7 @@ if (!isset($_SESSION["username"])) {
 $userid = $_SESSION["userid"];
 //echo $userid;
 
-$sql = sprintf("SELECT Child_id, Name, DOB, Gender, Age FROM displays WHERE Reg_id=%s", $userid);
+$sql = sprintf("SELECT Child_id, Name, DOB, Gender, Age FROM child WHERE Reg_id=%s", $userid);
 $conn = connect_db();
 $rs = mysqli_query($conn, $sql);
 
@@ -93,14 +93,14 @@ render('dashsidebar', array('levelup' => '2', 'fullname' => $_SESSION["fullname"
 								echo '<tr>';
 								echo '<td>'. $i .'</td>';
 								echo '<td>'. htmlspecialchars($row["Name"]) .'</td>';
-								echo '<td>'. htmlspecialchars($row["Dob"]) .'</td>';
+								echo '<td>'. htmlspecialchars($row["DOB"]) .'</td>';
 								echo '<td>'. htmlspecialchars($row["Age"]) .'</td>';
 								if($row["Gender"] == 1)
 									echo '<td>Male</td>';
 								else
 									echo '<td>Female</td>';
 								//echo '<td>'. htmlspecialchars($row["Colour"]) .'</td>';
-								echo '<td class="tac"><a href="editchild.php?chid='. $row["Child_Id"] .'" class="btn btn-sm accent-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>';
+								echo '<td class="tac"><a href="editchild.php?chid='. $row["Child_id"] .'" class="btn btn-sm accent-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>';
 
 								echo '</tr>';
 								$i++;

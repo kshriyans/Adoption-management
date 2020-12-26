@@ -27,7 +27,8 @@
 					$pages = array("home", "appointments", "search", "adoptions", "donation", "settings");
 
 				if($_SESSION["usertype"] == 2)
-					$pages = array("home", "appointments", "godschild", "donation", "settings");
+					$pages = array("home", "appointments", "godschild", "donation");
+					error_reporting(E_ALL & ~E_WARNING);
 
 				foreach ($pages as $page)
 				{
@@ -82,11 +83,11 @@
 								echo '<li><a href="'. $page .'.php"><i class="fa fa-child" aria-hidden="true"></i>'. ucfirst($page) .'</a></li>';
 								break;
 							case 'donation':
-								echo '<li><a href="'. $page .'.php"><i class="fa fa-heart" aria-hidden="true"></i>'. ucfirst($page) .'</a></li>';
+								echo '<li><a href="'. $page .'.php"><i class="fa fa-id-badge" aria-hidden="true"></i>'. report .'</a></li>';
 								break;
-							case 'settings':
-								echo '<li><a href="'. $page .'.php"><i class="fa fa-cog" aria-hidden="true"></i>'. ucfirst($page) .'</a></li>';
-								break;
+							//case 'settings':
+							//	echo '<li><a href="'. $page .'.php"><i class="fa fa-cog" aria-hidden="true"></i>'. ucfirst($page) .'</a></li>';
+							//	break;
 
 							default:
 								# code...
