@@ -6,7 +6,7 @@
 	</div>
 
 	<div class="dash-container user-info">
-		<div class="user-avatar" style="background-image: url('<?php echo htmlspecialchars($photo); ?>');"></div>
+		<div class="user-avatar" style="background-image: url('Adoption/Adoption.jpeg');"></div>
 		<h3>
 			<?php
 				if($_SESSION["usertype"] == 1)
@@ -52,7 +52,7 @@
 								echo '<li class="active"><a href="'. $page .'.php"><i class="fa fa-child" aria-hidden="true"></i>'. ucfirst($page) .'</a></li>';
 								break;
 							case 'donation':
-								echo '<li class="active"><a href="'. $page .'.php"><i class="fa fa-heart" aria-hidden="true"></i>'. ucfirst($page) .'</a></li>';
+								echo '<li class="active"><a href="'. $page .'.php"><i class="fa fa-heart" aria-hidden="true"></i>Appointments</a></li>';
 								break;
 							case 'settings':
 								echo '<li class="active"><a href="'. $page .'.php"><i class="fa fa-cog" aria-hidden="true"></i>'. ucfirst($page) .'</a></li>';
@@ -70,9 +70,9 @@
 							case 'home':
 								echo '<li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>';
 								break;
-							case 'appointments':
-								echo '<li><a href="'. $page .'.php"><i class="fa fa-calendar-o" aria-hidden="true"></i>'. ucfirst($page) .'</a></li>';
-								break;
+							//case 'appointments':
+							//	echo '<li><a href="'. $page .'.php"><i class="fa fa-calendar-o" aria-hidden="true"></i>'. ucfirst($page) .'</a></li>';
+							//	break;
 							case 'search':
 								echo '<li><a href="'. $page .'.php"><i class="fa fa-search" aria-hidden="true"></i>'. ucfirst($page) .'</a></li>';
 								break;
@@ -83,7 +83,7 @@
 								echo '<li><a href="'. $page .'.php"><i class="fa fa-child" aria-hidden="true"></i>'. ucfirst($page) .'</a></li>';
 								break;
 							case 'donation':
-								echo '<li><a href="'. $page .'.php"><i class="fa fa-id-badge" aria-hidden="true"></i>'. report .'</a></li>';
+								echo '<li><a href="'. $page .'.php"><i class="fa fa-id-badge" aria-hidden="true"></i>Appointments</a></li>';
 								break;
 							//case 'settings':
 							//	echo '<li><a href="'. $page .'.php"><i class="fa fa-cog" aria-hidden="true"></i>'. ucfirst($page) .'</a></li>';

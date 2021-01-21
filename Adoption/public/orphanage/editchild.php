@@ -293,7 +293,7 @@ render('dashsidebar', array('levelup' => '2', 'fullname' => $_SESSION["fullname"
 							<input type="text" id="Event" name="Event" placeholder="Event name(Only if won)" value="<?php if(isset($_POST["Event"])) echo $_POST["Event"]; ?>">
 						</div>
 						<br />
-						<div class="row form-controls-row">
+						<!--<div class="row form-controls-row">
 							<label>Image of child:<span class="mandatory">*</span></label>
 							<div class="upload-img img-thumbnail" style="background-image: url('<?php if(isset($oldphoto)) echo htmlspecialchars($oldphoto); ?>'); width: 150px;"></div>
 						</div>
@@ -301,7 +301,7 @@ render('dashsidebar', array('levelup' => '2', 'fullname' => $_SESSION["fullname"
 						<div class="row form-controls-row">
 							<label>Upload new image of child:</label>
 							<input type="file" id="photo" name="photo" value="">
-						</div>
+						</div>-->
 
 						<br />
 						<div class="row form-controls-btnrow clearfix">

@@ -29,9 +29,9 @@ require_once('../includes/helpers.php');
 					<div class="nav-menu nav-horizontal">
 						<ul class="clearfix">
 							<li><a href="/" class="under-bar">Home</a></li>
-							<li><a href="/about/">About</a></li>
-							<li><a href="/contact/">Contact</a></li>
-							<li><a href="/faq/">FAQ</a></li>
+							<li><a href="/Adoption/public/about/">About</a></li>
+							<!--<li><a href="/Adoption/public/contact/">Contact</a></li>-->
+							<li><a href="/Adoption/public/faq/">FAQ</a></li>
 							<li><a href="/Adoption/public//register/">Register</a></li>
 							<li><a href="/Adoption/public//login.php">Login</a></li>
 						</ul>
@@ -40,7 +40,7 @@ require_once('../includes/helpers.php');
 				<div class="banner-text">
 					<h1>Be great by adopting a child</h1>
 					<p>We are an organisation that brings people together<br />so that no child is alone.</p>
-					<a href="/about/" class="btn-hero">Know more</a>
+					<a href="/Adoption/public/about/" class="btn-hero">Know more</a>
 				</div>
 			</div>
 		</div>
@@ -49,12 +49,12 @@ require_once('../includes/helpers.php');
 			<div class="container tac">
 				<h1 class="txt-light">Are you an orphanage organisation?</h1>
 				<p class="txt-semi-dark div-center hero-para">Register your organisation with us. Your organistaion will be listed as an orphanage centre and an adopter can adopt child from your organisation.</p><br><br>
-				<p class="div-center"><a href="aboutus/#org" class="anim-link txt-optional">Know more</a></p>
+				<p class="div-center"><a href="/Adoption/public/aboutus" class="anim-link txt-optional">Know more</a></p>
 				<a href="register/?reg=org" class="btn btn-hero-sm accent-primary txt-light">Register</a>
 			</div>
 		</div>
 
-		<div class="row full-section accent-primary">
+		<!--<div class="row full-section accent-primary">
 			<div class="clearfix" style="width: 95%; margin: 0 auto;">
 				<div class="col-w-3">
 					<div class="adop-img">
@@ -64,7 +64,7 @@ require_once('../includes/helpers.php');
 					<h1 class="txt-light tal">Do you want to adopt a child?</h1>
 					<p class="txt-semi-dark tal hero-para" style="width: 100% !important">Adopt a child to make a child's wish true.<br/>You don't have to find all the organisation centre by visiting to their place, try our site, we have more than 100 (for now) verified orphanage centre.</p>
 					<p class="txt-semi-dark tal hero-para" >Just Register, Search, Appoint, Adopt. As simple as that!</p>
-					<a href="aboutus/#adop" class="anim-link txt-optional">Know more</a><br>
+					<a href="/Adoption/public/aboutus" class="anim-link txt-optional">Know more</a><br>
 					<a href="register/?reg=adop" class="btn btn-hero-sm accent-secondary txt-light">Adopt a child</a>
 				</div>
 			</div>
@@ -112,7 +112,7 @@ require_once('../includes/helpers.php');
 				</div>
 				<div class="tac"><a href="register/" class="btn btn-hero-sm accent-primary txt-light" style="clear: both; display: inline-block;">View more</a></div>
 			</div>
-		</div>
+		</div>-->
 <?php
 /*************************************
 * Render footer file

@@ -77,7 +77,7 @@ mysqli_free_result($rs);
 //   Fetching appointment statistics
 //   from appointment table
 /////////////////////////////////
-/*$sql = sprintf("SELECT COUNT(AppId) Apps FROM appointment WHERE OId=%s GROUP BY OId", $userid);
+$sql = sprintf("SELECT COUNT(ID) Apps FROM Shortlisted WHERE Reg_id=%s GROUP BY Reg_id", $userid);
 $rs = mysqli_query($conn, $sql);
 if(!$rs) { die("Query failed - " . mysqli_error($conn)); }
 
@@ -93,7 +93,7 @@ else
 	$apps = 0;
 }
 // Freein up result set
-mysqli_free_result($rs);*/
+mysqli_free_result($rs);
 
 // Closing connection
 mysqli_close($conn);
@@ -151,7 +151,7 @@ render('dashsidebar', array('levelup' => '2', 'fullname' => $_SESSION["fullname"
 						</div>
 					</div>
 				</div>
-				<!--<div class="col-w-4">
+				<div class="col-w-4">
 					<div class="dash-container">
 						<div class="panel panel-default">
 							<div class="panel-body">
@@ -161,7 +161,7 @@ render('dashsidebar', array('levelup' => '2', 'fullname' => $_SESSION["fullname"
 							</div>
 						</div>
 					</div>
-				</div>-->
+				</div>
 
 
 

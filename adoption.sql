@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 26, 2020 at 01:36 PM
+-- Generation Time: Jan 10, 2021 at 08:14 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -47,7 +47,11 @@ CREATE TABLE `adopted` (
 --
 
 INSERT INTO `adopted` (`Child_id`, `Parent_id`, `Child_name`, `Parent_Name`, `Child_Gender`, `Weight`, `Blood_group`, `Height`, `Marital_status`, `DOA`, `Address`, `Reg_id`) VALUES
-(4, NULL, 'Ram', NULL, '2', 45.0000, 'Bposi', 134.0000, NULL, '2020-12-26', NULL, 1);
+(4, 1, 'Ram', 'Furqan', '2', 45.0000, 'Bposi', 134.0000, 'Yes', '2020-12-26', 'abcd', 1),
+(11, 2, 'Raju Srivastav', 'Kaustubh', '1', 33.0000, 'Onegative', 134.0000, 'Yes', '2020-12-29', 'abcd', 3),
+(12, 3, 'Shyam Raju', 'Hamilton', '1', 45.0000, 'Bpositive', 143.0000, 'Yes', '2020-12-29', 'abcd', 4),
+(13, 4, 'Dhanya Ks', 'Roberu', '1', 43.0000, 'Opositive', 143.0000, 'Yes', '2020-12-29', 'abcd', 5),
+(17, 5, 'Hemant', 'Himesh', '1', 33.0000, 'Bpositive', 142.0000, 'Yes', '2021-01-10', 'abcd', 5);
 
 -- --------------------------------------------------------
 
@@ -79,7 +83,11 @@ INSERT INTO `child` (`Child_id`, `Name`, `DOB`, `Age`, `Gender`, `Weight`, `Heig
 (6, 'Killer Que', '2006-07-01', 14, '2', 56.0000, 154.0000, 'ABnega', '/assets/img/godschild/20201226090344_1608969824.jpg', 1),
 (7, 'Shyam', '2000-05-01', 20, '1', 36.0000, 165.0000, 'Oposit', '/assets/img/godschild/20201226090725_1608970045.jpg', 1),
 (8, 'Futureis', '2001-03-05', 19, '2', 32.0000, 134.0000, 'Anegat', '/assets/img/godschild/20201226091854_1608970734.jpg', 1),
-(9, 'Birju', '2013-05-09', 7, '1', 33.0000, 142.0000, 'Bnegative', '/assets/img/godschild/20201226122734_1608982054.jpg', 1);
+(9, 'Birju', '2013-05-09', 7, '1', 33.0000, 142.0000, 'Bnegative', '/assets/img/godschild/20201226122734_1608982054.jpg', 1),
+(10, 'Dhyan Vats', '2003-09-23', 17, '1', 32.0000, 143.0000, 'Bpositive', '/assets/img/godschild/20201227062322_1609046602.jpg', 2),
+(14, 'Altair', '2019-01-01', 2, '2', 32.0000, 165.0000, 'Bpositive', '/assets/img/godschild/20210110112057_1610274057.jpg', 5),
+(15, 'Dhanya Ks', '2001-03-05', 19, '2', 35.0000, 143.0000, 'Opositive', 'Adoptionpublicassetsimggodschild20210110112552_1610274352.jpg', 5),
+(16, 'Ram', '2006-07-01', 14, '2', 33.0000, 134.0000, 'Onegative', '/children20210110112842_1610274522.jpg', 5);
 
 -- --------------------------------------------------------
 
@@ -112,7 +120,11 @@ CREATE TABLE `event` (
 INSERT INTO `event` (`Event_id`, `Name`, `Date`, `Winner`) VALUES
 (1, '', '2020-12-26', 'Jack Churn'),
 (2, '', '2020-12-26', 'Jack Churn'),
-(3, 'Dancing', '2020-12-26', 'Jack Churn');
+(3, 'Dancing', '2020-12-26', 'Jack Churn'),
+(4, '100m Race', '2020-12-27', 'Dhyan Vats'),
+(5, 'Relay race', '2020-12-29', 'Raju Srivastav'),
+(6, '100m Race', '2020-12-29', 'Shyam Raju'),
+(7, 'Dancing', '2020-12-29', 'Dhanya Ks');
 
 -- --------------------------------------------------------
 
@@ -187,7 +199,11 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`Username`, `Password`, `UserId`, `UserType`) VALUES
-('hlingaraj0', 'toor', 1, 2);
+('hlingaraj0', 'toor', 1, 2),
+('vishwa@gmail.com', 'hello', 2, 2),
+('something@gmail.com', 'hello', 3, 2),
+('someone@gmail.com', 'someone', 4, 2),
+('anything@gmail.com', 'hello', 5, 2);
 
 -- --------------------------------------------------------
 
@@ -209,7 +225,11 @@ CREATE TABLE `organisation` (
 --
 
 INSERT INTO `organisation` (`Regid`, `Name`, `Phone_number`, `Address`, `Reg_Date`, `Email_id`) VALUES
-(1, 'Dhanya Ks', '9972877295', 'Sakaleshpur Main Bra', '2020-12-25', 'hlingaraj0');
+(1, 'Dhanya Ks', '9972877295', 'Sakaleshpur Main Bra', '2020-12-25', 'hlingaraj0'),
+(2, 'Vishwa Org', '1234567890', 'Bangalore', '2020-12-27', 'vishwa@gma'),
+(3, 'Orphanage 2', '1234567890', 'Bangalore', '2020-12-29', 'something@'),
+(4, 'Vishwass', '1234567890', 'Bangalore', '2020-12-29', 'someone@gm'),
+(5, 'Swastika', '1234567890', 'Bangalore', '2020-12-29', 'anything@g');
 
 -- --------------------------------------------------------
 
@@ -238,8 +258,18 @@ CREATE TABLE `shortlisted` (
   `Voting_id` varchar(20) DEFAULT NULL,
   `Job` varchar(30) DEFAULT NULL,
   `Blood_group` varchar(10) DEFAULT NULL,
-  `Income` decimal(13,4) DEFAULT NULL
+  `Income` decimal(13,4) DEFAULT NULL,
+  `Reg_id` int(20) UNSIGNED NOT NULL,
+  `Status` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `shortlisted`
+--
+
+INSERT INTO `shortlisted` (`ID`, `Age`, `Gender`, `Marital_status`, `Address`, `Aadhar`, `Voting_id`, `Job`, `Blood_group`, `Income`, `Reg_id`, `Status`) VALUES
+(1, 25, 'M', 'Yes', 'abcd', '1212', '1234', 'Engineer', 'Opos', '100000.0000', 1, 2),
+(2, 25, 'M', 'Yes', 'abcd', '1212', '1234', 'Engineer', 'Opos', '100000.0000', 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -335,31 +365,31 @@ ALTER TABLE `shortlisted`
 -- AUTO_INCREMENT for table `adopted`
 --
 ALTER TABLE `adopted`
-  MODIFY `Child_id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Child_id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `child`
 --
 ALTER TABLE `child`
-  MODIFY `Child_id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `Child_id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `Event_id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Event_id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `organisation`
 --
 ALTER TABLE `organisation`
-  MODIFY `Regid` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Regid` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `shortlisted`
 --
 ALTER TABLE `shortlisted`
-  MODIFY `ID` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

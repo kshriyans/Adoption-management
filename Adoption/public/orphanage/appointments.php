@@ -25,7 +25,7 @@ if (!isset($_SESSION["username"])) {
 ///////////////////////////////
 $userid = $_SESSION["userid"];
 $conn = connect_db();
-$sql = sprintf("SELECT AppId, RequestedOn, Status, AdopId, FName, LName, ChId, gcFName, gcLName  FROM appointment_V WHERE OId=%s", $userid);
+$sql = sprintf("SELECT ID, Age, Marital_status, Gender, Address, Aadhar, Voting_id, Job, Blood_group  FROM shortlisted WHERE Reg_id=%s", $userid);
 
 $rs = mysqli_query($conn, $sql);
 if(!$rs) { die("Query failed - " . myslqi_error($conn)); }
@@ -43,7 +43,7 @@ if(mysqli_num_rows($rs) == 0)
 * Render Dashboard header
 * @param array $data
 **************************************/
-render('dashheader', array('title' => $_SESSION["orgname"], 'levelup' => '2'));
+render('dashheader', array('title' => 'Hello', 'levelup' => '2'));
 
 ?>
 
@@ -54,7 +54,7 @@ render('dashheader', array('title' => $_SESSION["orgname"], 'levelup' => '2'));
 * Render Dashboard Sidebar
 * @param array $data
 **************************************/
-render('dashsidebar', array('levelup' => '2', 'orgname' => $_SESSION["orgname"], 'fullname' => $_SESSION["fullname"], 'photo' => $_SESSION["photo"], 'curpage' => 'appointments'));
+render('dashsidebar', array('levelup' => '2', 'orgname' => 'Hello', 'curpage' => 'appointments'));
 ?>
 
 
@@ -79,8 +79,8 @@ render('dashsidebar', array('levelup' => '2', 'orgname' => $_SESSION["orgname"],
 				<table width="100%" border="1" class="table">
 					<tr class="tal thead">
 						<th>#id</th>
-						<th>Request date</th>
-						<th>Description</th>
+						<th>Parent NAme</th>
+						<th>Childname</th>
 						<th>Status</th>
 						<th>View</th>
 
@@ -91,9 +91,9 @@ render('dashsidebar', array('levelup' => '2', 'orgname' => $_SESSION["orgname"],
 							while ($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
 							{
 								echo '<tr>';
-								echo '<td>'. $row["AppId"] .'</td>';
-								echo '<td>'. htmlspecialchars(explode(" ", $row["RequestedOn"])[0]) . '</td>';
-								echo '<td><a href="adopterprofile.php?aid='. $row["AdopId"] .'" title="View adopter profile">'. htmlspecialchars($row["FName"] . ' ' . $row["LName"]) .'</a> has sent appointment request to you for child '. $row["gcFName"] . ' ' . $row["gcLName"] . '.</td>';
+								echo '<td>'. $row["ID"] .'</td>';
+								echo '<td>'. htmlspecialchars(explode(" ", $row["Age"])[0]) . '</td>';
+								echo '<td><a href="adopterprofile.php?aid='. $row["ID"] .'" title="View adopter profile">'. htmlspecialchars($row["Age"] . ' ' . $row["Gender"]) .'</a> has sent appointment request to you for child '. $row["Aadhar"] . ' ' . '.</td>';
 								if($row["Status"] == 1)
 									echo '<td>Request made</td>';
 								else if($row["Status"] == 2)
@@ -101,9 +101,9 @@ render('dashsidebar', array('levelup' => '2', 'orgname' => $_SESSION["orgname"],
 								else if($row["Status"] == 3)
 									echo '<td style="color: #A00;">Request canceled!</td>';
 								if($row["Status"] == 3)
-									echo '<td class="tac"><a href="adopterprofile.php?aid='. $row["AdopId"] .'&appid='. $row["AppId"] .'&chid='. $row["ChId"] .'&action=reply" class="btn btn-sm accent-desabled" style="pointer-events: none;"><i class="fa fa-eye" aria-hidden="true"></i></a></td>';
+									echo '<td class="tac"><a href="adopterprofile.php?aid='. $row["ID"] .'&Age='. $row["Age"] .'&Income='. $row["Income"] .'&action=reply" class="btn btn-sm accent-desabled" style="pointer-events: none;"><i class="fa fa-eye" aria-hidden="true"></i></a></td>';
 								else
-									echo '<td class="tac"><a href="adopterprofile.php?aid='. $row["AdopId"] .'&appid='. $row["AppId"] .'&chid='. $row["ChId"] .'&action=reply" class="btn btn-sm accent-primary"><i class="fa fa-eye" aria-hidden="true"></i></a></td>';
+									echo '<td class="tac"><a href="adopterprofile.php?aid='. $row["ID"] .'&Age='. $row["Age"] .'&Income='. $row["Income"] .'&action=reply" class="btn btn-sm accent-primary"><i class="fa fa-eye" aria-hidden="true"></i></a></td>';
 
 								echo '</tr>';
 							}

@@ -152,7 +152,7 @@ render('header', array('title' => 'Register | Online Orphanage Home', 'levelup' 
             <div class="box">
 				<div class="step-bar tac">
 					<span class="accent-secondary txt-light">1</span><i style="color: #a8a8a8;">Fill up your details</i><i class="rarrow"></i>
-					<i style="color: #a8a8a8;">Upload your image</i><span class="accent-secondary txt-light">2</span>
+					<i style="color: #a8a8a8;">Done!</i><span class="accent-secondary txt-light">2</span>
 				</div>
             <!-- Main Page Block -->
                 <div class="box-body">
@@ -176,8 +176,8 @@ render('header', array('title' => 'Register | Online Orphanage Home', 'levelup' 
 								<div class="row form-controls-row">
 									<label>I am an: <span class="mandatory">*</span></label>
 									<select name="usertype" id="usertype">
-										<option disabled="disabled" selected>Select user type</option>
-										<option value="1">Adopter</option>
+										<!--<option disabled="disabled" selected>Select user type</option>
+										<option value="1">Adopter</option>-->
 										<option value="2">Orphanage centre</option>
 									</select>
 								</div>

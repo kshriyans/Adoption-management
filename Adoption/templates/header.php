@@ -17,7 +17,7 @@
 			<div class="container" style="padding: 15px 25px;">
 				<header class="clearfix">
 					<div class="logo">
-						<a href="/">
+						<a href="/Adoption/public/">
 							<h1>Online Orphanage Home</h1>
 							<p>A place where people comes together.</p>
 						</a>
@@ -25,26 +25,26 @@
 					<div class="nav-menu nav-horizontal">
 						<ul class="clearfix">
 						<?php
-							$pages = array("home", "about", "contact", "faq", "register", "login");
+							$pages = array("home", "about", "faq", "register", "login");
 							foreach ($pages as $page)
 							{
 								if($page == $curpage)
 								{
 									if($page == "login")
-										echo '<li><a href="/'. $page .'.php" class="txt-semi-dark under-bar">'. ucfirst($page) .'</a></li>';
+										echo '<li><a href="/Adoption/public/'. $page .'.php" class="txt-semi-dark under-bar">'. ucfirst($page) .'</a></li>';
 									else if($page == "home")
-										echo '<li><a href="/" class="txt-semi-dark under-bar">'. ucfirst($page) .'</a></li>';
+										echo '<li><a href="/Adoption/public/" class="txt-semi-dark under-bar">'. ucfirst($page) .'</a></li>';
 									else
-										echo '<li><a href="/'. $page .'/" class="txt-semi-dark under-bar">'. ucfirst($page) .'</a></li>';
+										echo '<li><a href="/Adoption/public/'. $page .'/" class="txt-semi-dark under-bar">'. ucfirst($page) .'</a></li>';
 								}
 								else
 								{
 									if($page == "login")
-										echo '<li><a href="/'. $page .'.php" class="txt-semi-dark">'. ucfirst($page) .'</a></li>';
+										echo '<li><a href="/Adoption/public/'. $page .'.php" class="txt-semi-dark">'. ucfirst($page) .'</a></li>';
 									else if($page == "home")
-										echo '<li><a href="/" class="txt-semi-dark">'. ucfirst($page) .'</a></li>';
+										echo '<li><a href="/Adoption/public/" class="txt-semi-dark">'. ucfirst($page) .'</a></li>';
 									else
-										echo '<li><a href="/'. $page .'/" class="txt-semi-dark">'. ucfirst($page) .'</a></li>';
+										echo '<li><a href="/Adoption/public/'. $page .'/" class="txt-semi-dark">'. ucfirst($page) .'</a></li>';
 								}
 							}
 						?>

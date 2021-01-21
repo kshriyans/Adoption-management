@@ -5,6 +5,7 @@ require_once('../../includes/helpers.php');
 if(!is_ajax_request()) { exit; }
 
 //echo $_POST["oid"];
+/*
 if(isset($_POST["aid"]) && isset($_POST["chid"]))
 {
 	$conn = connect_db();
@@ -22,10 +23,9 @@ if(isset($_POST["aid"]) && isset($_POST["chid"]))
 		$responsetxt = 'Congrats! We have marked this child as adopted.';
 	}
 
-}
+}*/
 
 
-// Processing donation received click button
 if(isset($_POST["action"]) && $_POST["action"] == "donation_rcvd")
 {
 	if(isset($_POST["did"]) && !empty($_POST["did"]))
@@ -33,14 +33,14 @@ if(isset($_POST["action"]) && $_POST["action"] == "donation_rcvd")
 		$conn = connect_db();
 		$did = validate_form_data($conn, $_POST["did"]);
 
-		$sql = sprintf("UPDATE donation set Status=2 WHERE DId=%s", $did);
+		$sql = sprintf("UPDATE shortlisted set Status=2 WHERE ID=%s", $did);
 		$rs = mysqli_query($conn, $sql);
 		if(!$rs)
 			{ die('Query failed - ' . mysqli_error($conn)); }
 		else
 		{
-			$responsehead = '<p>Donation received.</p>';
-			$responsetxt = 'A notification is sent to donor that you have recieved his Demand Draft.';
+			$responsehead = '<p> Alert.</p>';
+			$responsetxt = 'Request Accepted.';
 		}
 
 	}
