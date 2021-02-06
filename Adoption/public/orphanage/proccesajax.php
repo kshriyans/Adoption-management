@@ -32,9 +32,14 @@ if(isset($_POST["action"]) && $_POST["action"] == "donation_rcvd")
 	{
 		$conn = connect_db();
 		$did = validate_form_data($conn, $_POST["did"]);
+		$subject = 'Adoption Status';
+		$message = 'This is to certify that Your profile has been Accepted! Send your Documents at Orphanage@gmail.com';
+		//$headers = 'From: rvcebangalore12@gmail.com';
 
 		$sql = sprintf("UPDATE shortlisted set Status=2 WHERE ID=%s", $did);
+		$sql1 = sprintf("SELECT * FROM shortlisted WHERE ID=%s", $did);
 		$rs = mysqli_query($conn, $sql);
+		$rs1 = mysqli_query($conn, $sql1);
 		if(!$rs)
 			{ die('Query failed - ' . mysqli_error($conn)); }
 		else
@@ -42,6 +47,10 @@ if(isset($_POST["action"]) && $_POST["action"] == "donation_rcvd")
 			$responsehead = '<p> Alert.</p>';
 			$responsetxt = 'Request Accepted.';
 		}
+		if(!$rs1)
+			{ die('Query failed - ' . mysqli_error($conn)); }
+		$row1 = mysqli_fetch_array($rs1, MYSQLI_ASSOC);
+		mail($row1["Address"],$subject,$message);
 
 	}
 }

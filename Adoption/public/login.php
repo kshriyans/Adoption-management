@@ -125,7 +125,6 @@ render('header', array('title' => 'Login | Online Orphanage Home', 'levelup' => 
 							</div>
 							<div class="row form-controls-btnrow">
 								<p style="font-size: 14px !important; color: #444;">Not registered yet? <a href="/Adoption/public/register/" class="anim-link txt-light">Register now</a></p>
-								<p style="font-size: 14px !important;"><a href="recoveraccount.php" class="anim-link txt-light">Forgotten password?</a></p>
 							</div>
                             </form>
                         </div>
